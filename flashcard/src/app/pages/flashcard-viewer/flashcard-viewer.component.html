@@ -1,0 +1,43 @@
+<div class="flashcard-container" (click)="flipCard()">
+  <div class="flashcard" [@flipState]="isFlipped ? 'back' : 'front'">
+    <mat-icon
+      class="favorite-icon"
+      (click)="toggleFavorite($event)"
+      [@starAnimation]="
+        isFavorite(flashcards[currentIndex].id) ? 'favorited' : 'unfavorited'
+      "
+      *ngIf="isBrowser"
+    >
+      {{ isFavorite(flashcards[currentIndex].id) ? "star" : "star_border" }}
+    </mat-icon>
+
+    <div class="front" *ngIf="!isFlipped">
+      <h3>Question</h3>
+      <p>{{ flashcards[currentIndex].question }}</p>
+    </div>
+    <div class="back" *ngIf="isFlipped">
+      <h3>Answer</h3>
+      <p>{{ flashcards[currentIndex].answer }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="navigation-buttons">
+  <button mat-button (click)="previousCard()" [disabled]="currentIndex === 0">
+    Previous
+  </button>
+  <button
+    mat-button
+    (click)="nextCard()"
+    [disabled]="currentIndex === flashcards.length - 1"
+  >
+    Next
+  </button>
+  <button mat-button (click)="randomCard()">Random</button>
+</div>
+
+<div class="viewed-status">
+  <p *ngIf="hasViewed(flashcards[currentIndex].id)">
+    You've already viewed this card.
+  </p>
+</div>
