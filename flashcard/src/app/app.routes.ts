@@ -10,5 +10,7 @@ export const routes: Routes = [
 { path: 'author', component: FlashcardFormComponent },
 { path: 'viewer', component: FlashcardViewerComponent },
  { path: 'flashcard-viewer/:id', component: FlashcardViewerComponent },
-{ path: '**', redirectTo: 'dashboard' }
+ { path: 'viewer/:id', component: FlashcardViewerComponent },
+
+ { path: '**', redirectTo: 'dashboard' }
 ];

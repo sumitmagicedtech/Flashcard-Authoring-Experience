@@ -10,6 +10,7 @@ import { SelectInputComponent } from '../../components/select-input/select-input
 import { TextInputComponent } from '../../components/text-input/text-input.component';
 import { TagInputComponent } from '../../components/tag-input/tag-input.component';
 import { FlashcardDataService } from '../../shared/services/flashcard-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-flashcard-form',
@@ -37,7 +38,8 @@ export class FlashcardFormComponent {
   // Constructor of FlashcardFormComponent
   constructor(
     private fb: FormBuilder,
-     private flashcardService: FlashcardDataService
+     private flashcardService: FlashcardDataService,
+   private router: Router
   
   ) {
     this.form = this.fb.group({
@@ -135,16 +137,29 @@ export class FlashcardFormComponent {
   // }
 
 
+// submit() {
+//   if (this.form.valid) {
+//     const formValue = {
+//       ...this.form.value,
+//       images: this.images.controls.map(ctrl => ctrl.value)
+//     };
+//     this.flashcardService.addFlashcard(formValue);
+//     console.log('Saved to LocalStorage:', formValue);
+//     this.form.reset();
+//     this.images.clear();
+//   }
+
+ 
 submit() {
   if (this.form.valid) {
-    const formValue = {
-      ...this.form.value,
-      images: this.images.controls.map(ctrl => ctrl.value)
-    };
-    this.flashcardService.addFlashcard(formValue);
-    console.log('Saved to LocalStorage:', formValue);
-    this.form.reset();
-    this.images.clear();
+    const flashcard = this.form.value;
+    this.flashcardService.addFlashcard(flashcard); // Save to localStorage
+    this.form.reset(); // Optional: clear form after submission
+    this.router.navigate(['/dashboard']); // Redirect to dashboard (or '/dashboard' if that's your route)
+  } else {
+    console.log('Form is invalid');
   }
 }
+
+
 }
